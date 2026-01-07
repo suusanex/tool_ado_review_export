@@ -1,0 +1,2 @@
+# tool_ado_review_export
+Azure DevOpsのレビューコメント履歴をまとめてエクスポートするツール。構成の実験も兼ねるため、WinUI 3とCLIの両方のインターフェースを持たせる。
