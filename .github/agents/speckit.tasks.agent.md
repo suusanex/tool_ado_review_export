@@ -25,14 +25,14 @@ You **MUST** consider the user input before proceeding (if not empty).
 
 2. **Load design documents**: Read from FEATURE_DIR:
    - **Required**: plan.md (tech stack, libraries, structure), spec.md (user stories with priorities)
-   - **Optional**: data-model.md (entities), contracts/ (API endpoints), research.md (decisions), quickstart.md (test scenarios)
+   - **Optional**: functional-design.md (external behavior, UI/CLI, software interfaces), integration-test.md (operational test perspectives), research.md (decisions), quickstart.md (user guide / scenarios)
    - Note: Not all projects have all documents. Generate tasks based on what's available.
 
 3. **Execute task generation workflow**:
    - Load plan.md and extract tech stack, libraries, project structure
    - Load spec.md and extract user stories with their priorities (P1, P2, P3, etc.)
-   - If data-model.md exists: Extract entities and map to user stories
-   - If contracts/ exists: Map endpoints to user stories
+   - If functional-design.md exists: Extract features, UI/CLI behavior, messages, and external interfaces; map them to user stories
+   - If integration-test.md exists: Extract integration test perspectives and add corresponding verification tasks
    - If research.md exists: Extract decisions for setup tasks
    - Generate tasks organized by user story (see Task Generation Rules below)
    - Generate dependency graph showing user story completion order
@@ -113,14 +113,15 @@ Every task MUST strictly follow this format:
      - If tests requested: Tests specific to that story
    - Mark story dependencies (most stories should be independent)
 
-2. **From Contracts**:
-   - Map each contract/endpoint → to the user story it serves
-   - If tests requested: Each contract → contract test task [P] before implementation in that story's phase
+2. **From External Specification (functional-design.md)**:
+   - Map each externally visible function, UI/CLI behavior, and message → to the user story it serves
+   - Map each external interface definition (e.g., API endpoints/data formats) → to the implementing story
+   - If tests requested: Create tasks to validate the external interfaces and the user-visible messages/behaviors
 
-3. **From Data Model**:
-   - Map each entity to the user story(ies) that need it
-   - If entity serves multiple stories: Put in earliest story or Setup phase
-   - Relationships → service layer tasks in appropriate story phase
+3. **From Integration Test Plan (integration-test.md)**:
+   - Convert each integration test perspective into concrete validation tasks
+   - Keep these focused on real environment integration (not unit-test-only)
+   - Place validation tasks in the appropriate story phase or a final integration/verification phase
 
 4. **From Setup/Infrastructure**:
    - Shared infrastructure → Setup phase (Phase 1)

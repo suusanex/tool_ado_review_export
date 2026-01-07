@@ -6,7 +6,7 @@ description: "Task list template for feature implementation"
 # Tasks: [FEATURE NAME]
 
 **Input**: Design documents from `/specs/[###-feature-name]/`
-**Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
+**Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, functional-design.md, integration-test.md, quickstart.md
 
 **Tests**: The examples below include test tasks. Tests are OPTIONAL - only include them if explicitly requested in the feature specification.
 
@@ -32,8 +32,8 @@ description: "Task list template for feature implementation"
   The /speckit.tasks command MUST replace these with actual tasks based on:
   - User stories from spec.md (with their priorities P1, P2, P3...)
   - Feature requirements from plan.md
-  - Entities from data-model.md
-  - Endpoints from contracts/
+  - External behavior and interfaces from functional-design.md
+  - Operational test perspectives from integration-test.md
   
   Tasks MUST be organized by user story so each story can be:
   - Implemented independently
