@@ -12,7 +12,7 @@ description: "Task list for Azure DevOps PR Review Comment Exporter implementati
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
-**Tests**: Tests are NOT required by the specification. Integration tests will be implemented for operational validation per integration-test.md.
+**Tests**: 統合テストを省略してはいけません。統合テスト (integration-test.md) は、与えられた敬虔な統合テスト計画を接後で粛行し、実 OS 環境を修正せずの範囲で操作検証を実施する。（仕様要求としてを指定しないが、統一機査程度の品質施として実施する）
 
 ---
 
@@ -34,12 +34,12 @@ description: "Task list for Azure DevOps PR Review Comment Exporter implementati
 - [ ] T004 [P] Initialize AdoReviewExport.Infrastructure class library (.NET 10) at AdoReviewExport/AdoReviewExport.Infrastructure/AdoReviewExport.Infrastructure.csproj
 - [ ] T005 Configure project references (UI → Application → Infrastructure)
 - [ ] T006 [P] Add NuGet packages to UI project: Microsoft.WindowsAppSDK 1.7+, Microsoft.Extensions.DependencyInjection, Microsoft.Extensions.Logging
-- [ ] T007 [P] Add NuGet packages to Infrastructure project: Polly 8.x, System.Net.Http, System.Text.Json
+- [ ] T007 [P] Add NuGet packages to Infrastructure project: Polly 8.x, System.Net.Http, System.Text.Json, NLog 5.x
 - [ ] T008 Configure Unpackaged WinUI 3 settings in AdoReviewExport.UI/AdoReviewExport.UI.csproj (EnableMsixTooling=false, WindowsAppSDKSelfContained=true)
 - [ ] T009 [P] Create xUnit test project at AdoReviewExport/tests/Unit/Unit.csproj
 - [ ] T010 [P] Create xUnit integration test project at AdoReviewExport/tests/Integration/Integration.csproj
 - [ ] T011 [P] Add Moq package to Unit test project
-- [ ] T012 Create stub API project at AdoReviewExport/tests/StubApi/Program.cs using ASP.NET Core Minimal API
+- [ ] T012 Create stub API project at AdoReviewExport/tests/StubApi/Program.cs using ASP.NET Core Minimal API with /pullrequests and /threads endpoints
 
 ---
 
@@ -65,16 +65,19 @@ description: "Task list for Azure DevOps PR Review Comment Exporter implementati
 - [ ] T026 [P] Create PullRequestDto at AdoReviewExport/AdoReviewExport.Infrastructure/AzureDevOps/Dtos/PullRequestDto.cs
 - [ ] T027 Create IAdoApiClient interface at AdoReviewExport/AdoReviewExport.Infrastructure/AzureDevOps/IAdoApiClient.cs with GetPullRequestsAsync and GetThreadsAsync methods
 - [ ] T028 Implement AdoApiClient at AdoReviewExport/AdoReviewExport.Infrastructure/AzureDevOps/AdoApiClient.cs with HTTP Basic Auth for PAT
-- [ ] T029 Implement paging support ($top, $skip) in AdoApiClient for PR retrieval
+- [ ] T029 Implement paging support using Azure DevOps API continuation token in AdoApiClient for PR retrieval
 - [ ] T030 Create RetryPolicyFactory at AdoReviewExport/AdoReviewExport.Infrastructure/Http/RetryPolicyFactory.cs using Polly (exponential backoff, max 3 retries)
 - [ ] T031 Add HTTP 429 rate limit handling with Retry-After header respect in AdoApiClient
-- [ ] T032 Add PAT masking in logging (replace PAT with ***REDACTED*** in log output)
+- [ ] T032_Scope Create PrimaryAuthenticationScope validation: On first API connection, call _apis/profile/profiles/me to verify PAT has 'vso.code' Read scope; throw AuthenticationException with required scope message if missing (FR-004)
+- [ ] T032_Masking Add PAT masking in NLog output (replace PAT with ***REDACTED*** in file/console output)
 - [ ] T033 Create IJsonExporter interface at AdoReviewExport/AdoReviewExport.Infrastructure/Json/IJsonExporter.cs
-- [ ] T034 Implement JsonExporter with Utf8JsonWriter for streaming output at AdoReviewExport/AdoReviewExport.Infrastructure/Json/JsonExporter.cs
+- [ ] T034_Base Implement JsonExporter with Utf8JsonWriter for streaming output at AdoReviewExport/AdoReviewExport.Infrastructure/Json/JsonExporter.cs
+- [ ] T034_Meta Implement JsonExporter to include root.meta section with exportedAt (ISO 8601), repository (org/project/repo), counts (totalPRs, totalComments, totalThreads), appVersion, filters (FR-014)
+- [ ] T034_Compat Add root.schemaVersion = "1.0" to JSON output; document that new fields will be added-only, never modifying existing structure (FR-015)
 - [ ] T035 Create IExportService interface at AdoReviewExport/AdoReviewExport.Application/Services/IExportService.cs with ExportAsync method
 - [ ] T036 Implement ExportService at AdoReviewExport/AdoReviewExport.Application/Services/ExportService.cs orchestrating PR/Thread/Comment retrieval
 - [ ] T037 Configure dependency injection container in AdoReviewExport/AdoReviewExport.UI/App.xaml.cs for all services and interfaces
-- [ ] T038 Setup Microsoft.Extensions.Logging with file logging to %TEMP%\AdoReviewExport\logs\ with daily rotation
+- [ ] T038_NLog Setup NLog with file logging to %TEMP%\AdoReviewExport\logs\ with daily rotation and JSON format output
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
@@ -106,12 +109,12 @@ description: "Task list for Azure DevOps PR Review Comment Exporter implementati
 - [ ] T054 Create error dialog at AdoReviewExport/AdoReviewExport.UI/Views/ErrorDialog.xaml with error message display
 - [ ] T055 Implement error handling in MainViewModel mapping exceptions to user-friendly messages (ERR-001 to ERR-005)
 - [ ] T056 Add PAT masking in PasswordBox (display as ****) in MainWindow.xaml
-- [ ] T057 Implement default output path generation (Documents folder + ado-review-export-{timestamp}.json) in MainViewModel
+- [ ] T057 Implement default output path generation (Current directory + ado-review-export-{timestamp}.json) in MainViewModel
 
 ### Integration Tests for User Story 1
 
-- [ ] T058 [P] Implement stub API endpoint for PR list at AdoReviewExport/tests/StubApi/Controllers/PullRequestsController.cs returning mock PR data
-- [ ] T059 [P] Implement stub API endpoint for threads list at AdoReviewExport/tests/StubApi/Controllers/ThreadsController.cs returning mock thread/comment data
+- [ ] T058 [P] Implement stub API endpoint for PR list via Minimal API at /pullrequests returning mock PR data
+- [ ] T059 [P] Implement stub API endpoint for threads list via Minimal API at /threads returning mock thread/comment data
 - [ ] T060 [P] Implement stub API modes via environment variable (success, auth_error, timeout, rate_limit) in StubApi/Program.cs
 - [ ] T061 Create integration test for GUI application startup at AdoReviewExport/tests/Integration/GuiModeTests.cs verifying MainWindow displays
 - [ ] T062 [P] Create integration test for GUI export success at AdoReviewExport/tests/Integration/GuiModeTests.cs using stub API
@@ -142,7 +145,7 @@ description: "Task list for Azure DevOps PR Review Comment Exporter implementati
 - [ ] T074 [US2] Create ConsoleHelper at AdoReviewExport/AdoReviewExport.UI/Helpers/ConsoleHelper.cs with AttachConsole for WinExe output
 - [ ] T075 [US2] Implement CLI mode entry point RunCliMode in Program.cs calling ExportService
 - [ ] T076 [US2] Implement progress logging to Console.WriteLine in CLI mode
-- [ ] T077 [US2] Implement exit code mapping: 0=success, 1=input error, 2=auth error, 3=API error, 4=output error, 130=user cancel
+- [ ] T077 [US2] Implement exit code mapping: 0=success, 1=error (any error type) per FR-024
 - [ ] T078 [US2] Implement --help option handler displaying usage message in ConsoleHelper
 - [ ] T079 [US2] Implement Ctrl+C handling with CancellationToken in CLI mode
 - [ ] T080 [US2] Add validation for missing required arguments with error message and exit code 1
@@ -180,7 +183,7 @@ description: "Task list for Azure DevOps PR Review Comment Exporter implementati
 
 ### Integration Tests for User Story 3
 
-- [ ] T096 [P] [US3] Update stub API to return comments from multiple authors (alice, bob, charlie) at StubApi/Controllers/ThreadsController.cs
+- [ ] T096 [P] [US3] Update stub API to return comments from multiple authors (alice, bob, charlie) via Minimal API /threads endpoint
 - [ ] T097 [P] [US3] Create integration test for GUI author filter at AdoReviewExport/tests/Integration/GuiModeTests.cs verifying only filtered authors in output
 - [ ] T098 [P] [US3] Create integration test for CLI author filter at AdoReviewExport/tests/Integration/CliModeTests.cs verifying only alice and bob comments exported
 - [ ] T099 [P] [US3] Create integration test for non-existent author filter at AdoReviewExport/tests/Integration/DataOutputTests.cs verifying warning message and zero comments

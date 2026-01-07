@@ -28,9 +28,9 @@ Windows デスクトップアプリケーションとして、Azure DevOps の�
 
 ### Initial Check (Pre-Research)
 
-**Status**: ✓ PASS
+**Status**: ⚠️ CONDITIONAL PASS
 
-Constitution ファイルはテンプレート状態（具体的な原則未定義）のため、一般的な開発原則に基づいて評価:
+⚠️ **注意**: Constitution ファイルはテンプレート状態（具体的な原則未定義）です。以下の一般的な開発原則に基づいて評価されています。プロジェクト初期化時に憲章を確定してください。
 
 1. **テスト戦略**: ✓ 統合テストはスタブ API を使用し、実OS環境を変更しない（憲章原則5に準拠）
 2. **依存関係管理**: ✓ レイヤードアーキテクチャにより、UI → Application → Infrastructure の明確な依存関係
@@ -39,9 +39,9 @@ Constitution ファイルはテンプレート状態（具体的な原則未定�
 
 ### Post-Design Check (Phase 1 Complete)
 
-**Status**: ✓ PASS
+**Status**: ⚠️ CONDITIONAL PASS
 
-設計完了後の再評価:
+⚠️ 憲章の最終確定待ち。以下は一般原則ベースの評価：
 
 1. **テスト可能性**: ✓ すべての外部依存（Azure DevOps API）はインターフェース化され、テスト時にモック可能
 2. **セキュリティ**: ✓ PAT のメモリ上保持、ログマスキング、最小権限の原則を遵守
@@ -62,7 +62,7 @@ specs/001-ado-review-export/
 ├── functional-design.md # Phase 1 出力 (外部仕様)
 ├── integration-test.md  # Phase 1 出力 (統合テスト計画)
 ├── quickstart.md        # Phase 1 出力 (クイックスタート)
-└── tasks.md             # Phase 2 出力 (タスク分解) - NOT YET CREATED
+└── tasks.md             # Phase 2 出力 (タスク分解) ✓ COMPLETED
 ```
 
 ### Source Code (repository root)
@@ -173,7 +173,7 @@ AdoReviewExport/
 
 ### Phase 2: Tasks (Not Yet Started)
 
-次のステップ: `/speckit.tasks` コマンドを実行してタスク分解を行う
+次のステップ: `/speckit.implement` コマンドを実行して実装を開始する（Speckit Analysis 結果の既知課題を反映済み）
 
 ---
 
