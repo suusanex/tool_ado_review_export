@@ -11,6 +11,7 @@
     <!-- Unpackaged WinUI 3 settings -->
     <EnableMsixTooling>false</EnableMsixTooling>
     <WindowsAppSDKSelfContained>false</WindowsAppSDKSelfContained>
+    <WindowsPackageType>None</WindowsPackageType>
 
     <!-- Use our own Program.cs entrypoint (GUI/CLI branching later) -->
     <DefineConstants>$(DefineConstants);DISABLE_XAML_GENERATED_MAIN</DefineConstants>

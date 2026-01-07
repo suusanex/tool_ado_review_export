@@ -1,0 +1,14 @@
+<ContentDialog
+    x:Class="AdoReviewExport.UI.Views.Dialogs.CompletionDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="完了"
+    PrimaryButtonText="ファイルを開く"
+    SecondaryButtonText="フォルダーを開く"
+    CloseButtonText="閉じる">
+
+    <StackPanel Spacing="12">
+        <TextBlock x:Name="MessageText" TextWrapping="Wrap" />
+        <TextBlock x:Name="PathText" TextWrapping="Wrap" Opacity="0.7" />
+    </StackPanel>
+</ContentDialog>

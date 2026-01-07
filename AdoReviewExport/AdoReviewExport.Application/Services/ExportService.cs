@@ -85,6 +85,11 @@ public sealed class ExportService : IExportService
                     {
                         cancellationToken.ThrowIfCancellationRequested();
 
+                        if (!ShouldIncludeComment(request.AuthorFilters, comment.Author))
+                        {
+                            continue;
+                        }
+
                         await session.WriteItemAsync(pr, thread, comment, cancellationToken).ConfigureAwait(false);
                         totalComments++;
                     }
@@ -94,6 +99,11 @@ public sealed class ExportService : IExportService
             }
 
             await session.CompleteAsync(new JsonExportSummary(totalPullRequests, totalThreads, totalComments), cancellationToken).ConfigureAwait(false);
+
+            if (request.AuthorFilters is not null && request.AuthorFilters.Count > 0 && totalComments == 0)
+            {
+                progress?.Report(new ExportProgress(totalPullRequests, processedPullRequests, totalComments, "Warning: author filter matched zero comments."));
+            }
             stopwatch.Stop();
 
             return new ExportResult(
@@ -158,6 +168,33 @@ public sealed class ExportService : IExportService
         {
             throw new InputValidationException("Missing required field: OutputFilePath");
         }
+    }
+
+    private static bool ShouldIncludeComment(IReadOnlyList<string>? authorFilters, AdoReviewExport.Infrastructure.AzureDevOps.Dtos.IdentityDto? author)
+    {
+        if (authorFilters is null || authorFilters.Count == 0)
+        {
+            return true;
+        }
+
+        var displayName = author?.DisplayName ?? string.Empty;
+        var uniqueName = author?.UniqueName ?? string.Empty;
+
+        foreach (var filter in authorFilters)
+        {
+            if (string.IsNullOrWhiteSpace(filter))
+            {
+                continue;
+            }
+
+            if (displayName.Contains(filter, StringComparison.OrdinalIgnoreCase) ||
+                uniqueName.Contains(filter, StringComparison.OrdinalIgnoreCase))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     private static void TryDeleteFile(string filePath)

@@ -91,41 +91,41 @@ description: "Task list for Azure DevOps PR Review Comment Exporter implementati
 
 ### GUI Implementation for User Story 1
 
-- [ ] T039 Create Program.cs at AdoReviewExport/AdoReviewExport.UI/Program.cs with Main method for GUI/CLI mode branching
-- [ ] T040 Implement GUI mode detection and WinUI Application.Start in Program.Main
-- [ ] T041 Create App.xaml at AdoReviewExport/AdoReviewExport.UI/App.xaml with WinUI 3 application markup
-- [ ] T042 Implement App.xaml.cs with DI container initialization at AdoReviewExport/AdoReviewExport.UI/App.xaml.cs
-- [ ] T043 Create MainWindow.xaml at AdoReviewExport/AdoReviewExport.UI/Views/MainWindow.xaml with input fields (Organization, Project, Repository, PAT, Output Path, Authors)
-- [ ] T044 Add progress bar, status text, and log view UI controls to MainWindow.xaml
-- [ ] T045 Add Start Export and Cancel buttons to MainWindow.xaml
-- [ ] T046 Create MainViewModel at AdoReviewExport/AdoReviewExport.UI/ViewModels/MainViewModel.cs with INotifyPropertyChanged
-- [ ] T047 Implement input validation in MainViewModel (required fields check, MSG-001 to MSG-005)
-- [ ] T048 Implement StartExportAsync command in MainViewModel calling IExportService.ExportAsync
-- [ ] T049 Implement progress reporting via IProgress<ExportProgress> in MainViewModel updating UI
-- [ ] T050 Implement log view updates in MainViewModel (ObservableCollection<string> for logs)
-- [ ] T051 Implement Cancel button functionality with CancellationTokenSource in MainViewModel
-- [ ] T052 Create file selection dialog handler (📁 button) in MainWindow.xaml.cs
-- [ ] T053 Create completion dialog at AdoReviewExport/AdoReviewExport.UI/Views/CompletionDialog.xaml with Open File/Open Folder buttons
-- [ ] T054 Create error dialog at AdoReviewExport/AdoReviewExport.UI/Views/ErrorDialog.xaml with error message display
-- [ ] T055 Implement error handling in MainViewModel mapping exceptions to user-friendly messages (ERR-001 to ERR-005)
-- [ ] T056 Add PAT masking in PasswordBox (display as ****) in MainWindow.xaml
-- [ ] T057 Implement default output path generation (Current directory + ado-review-export-{timestamp}.json) in MainViewModel
+- [X] T039 Create Program.cs at AdoReviewExport/AdoReviewExport.UI/Program.cs with Main method for GUI/CLI mode branching
+- [X] T040 Implement GUI mode detection and WinUI Application.Start in Program.Main
+- [X] T041 Create App.xaml at AdoReviewExport/AdoReviewExport.UI/App.xaml with WinUI 3 application markup
+- [X] T042 Implement App.xaml.cs with DI container initialization at AdoReviewExport/AdoReviewExport.UI/App.xaml.cs
+- [X] T043 Create MainWindow.xaml at AdoReviewExport/AdoReviewExport.UI/Views/MainWindow.xaml with input fields (Organization, Project, Repository, PAT, Output Path, Authors)
+- [X] T044 Add progress bar, status text, and log view UI controls to MainWindow.xaml
+- [X] T045 Add Start Export and Cancel buttons to MainWindow.xaml
+- [X] T046 Create MainViewModel at AdoReviewExport/AdoReviewExport.UI/ViewModels/MainViewModel.cs with INotifyPropertyChanged
+- [X] T047 Implement input validation in MainViewModel (required fields check, MSG-001 to MSG-005)
+- [X] T048 Implement StartExportAsync command in MainViewModel calling IExportService.ExportAsync
+- [X] T049 Implement progress reporting via IProgress<ExportProgress> in MainViewModel updating UI
+- [X] T050 Implement log view updates in MainViewModel (ObservableCollection<string> for logs)
+- [X] T051 Implement Cancel button functionality with CancellationTokenSource in MainViewModel
+- [X] T052 Create file selection dialog handler (📁 button) in MainWindow.xaml.cs
+- [X] T053 Create completion dialog at AdoReviewExport/AdoReviewExport.UI/Views/CompletionDialog.xaml with Open File/Open Folder buttons
+- [X] T054 Create error dialog at AdoReviewExport/AdoReviewExport.UI/Views/ErrorDialog.xaml with error message display
+- [X] T055 Implement error handling in MainViewModel mapping exceptions to user-friendly messages (ERR-001 to ERR-005)
+- [X] T056 Add PAT masking in PasswordBox (display as ****) in MainWindow.xaml
+- [X] T057 Implement default output path generation (Current directory + ado-review-export-{timestamp}.json) in MainViewModel
 
 ### Integration Tests for User Story 1
 
-- [ ] T058 [P] Implement stub API endpoint for PR list via Minimal API at /pullrequests returning mock PR data
-- [ ] T059 [P] Implement stub API endpoint for threads list via Minimal API at /threads returning mock thread/comment data
-- [ ] T060 [P] Implement stub API modes via environment variable (success, auth_error, timeout, rate_limit) in StubApi/Program.cs
-- [ ] T061 Create integration test for GUI application startup at AdoReviewExport/tests/Integration/GuiModeTests.cs verifying MainWindow displays
-- [ ] T062 [P] Create integration test for GUI export success at AdoReviewExport/tests/Integration/GuiModeTests.cs using stub API
-- [ ] T063 [P] Create integration test for GUI authentication error at AdoReviewExport/tests/Integration/GuiModeTests.cs verifying error dialog
-- [ ] T064 [P] Create integration test for GUI network error with retry at AdoReviewExport/tests/Integration/GuiModeTests.cs
-- [ ] T065 [P] Create integration test for GUI cancel functionality at AdoReviewExport/tests/Integration/GuiModeTests.cs verifying incomplete file not saved
-- [ ] T066 [P] Create integration test for JSON schema validation at AdoReviewExport/tests/Integration/DataOutputTests.cs verifying meta and items structure
-- [ ] T067 [P] Create integration test for UTF-8 encoding and multibyte characters at AdoReviewExport/tests/Integration/DataOutputTests.cs with Japanese text
-- [ ] T068 [P] Create integration test for special character escaping (newlines, quotes) at AdoReviewExport/tests/Integration/DataOutputTests.cs
-- [ ] T069 [P] Create integration test for PAT masking in logs at AdoReviewExport/tests/Integration/SecurityTests.cs verifying PAT not in log file
-- [ ] T070 [P] Create integration test for PAT not in output JSON at AdoReviewExport/tests/Integration/SecurityTests.cs
+- [X] T058 [P] Implement stub API endpoint for PR list via Minimal API at /pullrequests returning mock PR data
+- [X] T059 [P] Implement stub API endpoint for threads list via Minimal API at /threads returning mock thread/comment data
+- [X] T060 [P] Implement stub API modes via environment variable (success, auth_error, timeout, rate_limit) in StubApi/Program.cs
+- [X] T061 Create integration test for GUI application startup at AdoReviewExport/tests/Integration/GuiModeTests.cs verifying MainWindow displays
+- [X] T062 [P] Create integration test for GUI export success at AdoReviewExport/tests/Integration/GuiModeTests.cs using stub API
+- [X] T063 [P] Create integration test for GUI authentication error at AdoReviewExport/tests/Integration/GuiModeTests.cs verifying error dialog
+- [X] T064 [P] Create integration test for GUI network error with retry at AdoReviewExport/tests/Integration/GuiModeTests.cs
+- [X] T065 [P] Create integration test for GUI cancel functionality at AdoReviewExport/tests/Integration/GuiModeTests.cs verifying incomplete file not saved
+- [X] T066 [P] Create integration test for JSON schema validation at AdoReviewExport/tests/Integration/DataOutputTests.cs verifying meta and items structure
+- [X] T067 [P] Create integration test for UTF-8 encoding and multibyte characters at AdoReviewExport/tests/Integration/DataOutputTests.cs with Japanese text
+- [X] T068 [P] Create integration test for special character escaping (newlines, quotes) at AdoReviewExport/tests/Integration/DataOutputTests.cs
+- [X] T069 [P] Create integration test for PAT masking in logs at AdoReviewExport/tests/Integration/SecurityTests.cs verifying PAT not in log file
+- [X] T070 [P] Create integration test for PAT not in output JSON at AdoReviewExport/tests/Integration/SecurityTests.cs
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently. MVP is complete.
 
@@ -139,27 +139,27 @@ description: "Task list for Azure DevOps PR Review Comment Exporter implementati
 
 ### CLI Implementation for User Story 2
 
-- [ ] T071 [US2] Implement CLI mode detection in Program.Main (args starting with --)
-- [ ] T072 [US2] Create command line argument parser at AdoReviewExport/AdoReviewExport.UI/Helpers/CliArgumentParser.cs for --org, --project, --repo, --pat, --output
-- [ ] T073 [US2] Implement environment variable support for AZDO_PAT in CliArgumentParser
-- [ ] T074 [US2] Create ConsoleHelper at AdoReviewExport/AdoReviewExport.UI/Helpers/ConsoleHelper.cs with AttachConsole for WinExe output
-- [ ] T075 [US2] Implement CLI mode entry point RunCliMode in Program.cs calling ExportService
-- [ ] T076 [US2] Implement progress logging to Console.WriteLine in CLI mode
-- [ ] T077 [US2] Implement exit code mapping: 0=success, 1=error (any error type) per FR-024
-- [ ] T078 [US2] Implement --help option handler displaying usage message in ConsoleHelper
-- [ ] T079 [US2] Implement Ctrl+C handling with CancellationToken in CLI mode
-- [ ] T080 [US2] Add validation for missing required arguments with error message and exit code 1
+- [X] T071 [US2] Implement CLI mode detection in Program.Main (args starting with --)
+- [X] T072 [US2] Create command line argument parser at AdoReviewExport/AdoReviewExport.UI/Helpers/CliArgumentParser.cs for --org, --project, --repo, --pat, --output
+- [X] T073 [US2] Implement environment variable support for AZDO_PAT in CliArgumentParser
+- [X] T074 [US2] Create ConsoleHelper at AdoReviewExport/AdoReviewExport.UI/Helpers/ConsoleHelper.cs with AttachConsole for WinExe output
+- [X] T075 [US2] Implement CLI mode entry point RunCliMode in Program.cs calling ExportService
+- [X] T076 [US2] Implement progress logging to Console.WriteLine in CLI mode
+- [X] T077 [US2] Implement exit code mapping: 0=success, 1=error (any error type) per FR-024
+- [X] T078 [US2] Implement --help option handler displaying usage message in ConsoleHelper
+- [X] T079 [US2] Implement Ctrl+C handling with CancellationToken in CLI mode
+- [X] T080 [US2] Add validation for missing required arguments with error message and exit code 1
 
 ### Integration Tests for User Story 2
 
-- [ ] T081 [P] [US2] Create integration test for --help display at AdoReviewExport/tests/Integration/CliModeTests.cs verifying usage message
-- [ ] T082 [P] [US2] Create integration test for missing arguments at AdoReviewExport/tests/Integration/CliModeTests.cs verifying exit code 1
-- [ ] T083 [P] [US2] Create integration test for successful CLI export at AdoReviewExport/tests/Integration/CliModeTests.cs using stub API verifying exit code 0
-- [ ] T084 [P] [US2] Create integration test for AZDO_PAT environment variable at AdoReviewExport/tests/Integration/CliModeTests.cs
-- [ ] T085 [P] [US2] Create integration test for CLI authentication error at AdoReviewExport/tests/Integration/CliModeTests.cs verifying exit code 2
-- [ ] T086 [P] [US2] Create integration test for CLI API error at AdoReviewExport/tests/Integration/CliModeTests.cs verifying exit code 3
-- [ ] T087 [P] [US2] Create integration test for CLI output error at AdoReviewExport/tests/Integration/CliModeTests.cs verifying exit code 4
-- [ ] T088 [P] [US2] Create integration test for Ctrl+C cancellation at AdoReviewExport/tests/Integration/CliModeTests.cs verifying exit code 130
+- [X] T081 [P] [US2] Create integration test for --help display at AdoReviewExport/tests/Integration/CliModeTests.cs verifying usage message
+- [X] T082 [P] [US2] Create integration test for missing arguments at AdoReviewExport/tests/Integration/CliModeTests.cs verifying exit code 1
+- [X] T083 [P] [US2] Create integration test for successful CLI export at AdoReviewExport/tests/Integration/CliModeTests.cs using stub API verifying exit code 0
+- [X] T084 [P] [US2] Create integration test for AZDO_PAT environment variable at AdoReviewExport/tests/Integration/CliModeTests.cs
+- [X] T085 [P] [US2] Create integration test for CLI authentication error at AdoReviewExport/tests/Integration/CliModeTests.cs verifying exit code 2
+- [X] T086 [P] [US2] Create integration test for CLI API error at AdoReviewExport/tests/Integration/CliModeTests.cs verifying exit code 3
+- [X] T087 [P] [US2] Create integration test for CLI output error at AdoReviewExport/tests/Integration/CliModeTests.cs verifying exit code 4
+- [X] T088 [P] [US2] Create integration test for Ctrl+C cancellation at AdoReviewExport/tests/Integration/CliModeTests.cs verifying exit code 130
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently. Both GUI and CLI modes are functional.
 
@@ -173,20 +173,20 @@ description: "Task list for Azure DevOps PR Review Comment Exporter implementati
 
 ### Author Filter Implementation for User Story 3
 
-- [ ] T089 [US3] Add AuthorFilters property to ExportRequest model in AdoReviewExport/AdoReviewExport.Application/Models/ExportRequest.cs
-- [ ] T090 [US3] Implement author filter logic in ExportService.ExportAsync filtering comments by author.displayName or author.uniqueName (case-insensitive partial match)
-- [ ] T091 [US3] Update JsonExporter to include applied filters in meta.filters section of JSON output
-- [ ] T092 [US3] Add Authors optional input field to MainWindow.xaml (comma-separated text box)
-- [ ] T093 [US3] Update MainViewModel to pass AuthorFilters from UI input to ExportRequest
-- [ ] T094 [US3] Add --authors optional argument to CLI argument parser in CliArgumentParser
-- [ ] T095 [US3] Implement warning message when author filter results in zero comments (display in GUI log, CLI stdout)
+- [X] T089 [US3] Add AuthorFilters property to ExportRequest model in AdoReviewExport/AdoReviewExport.Application/Models/ExportRequest.cs
+- [X] T090 [US3] Implement author filter logic in ExportService.ExportAsync filtering comments by author.displayName or author.uniqueName (case-insensitive partial match)
+- [X] T091 [US3] Update JsonExporter to include applied filters in meta.filters section of JSON output
+- [X] T092 [US3] Add Authors optional input field to MainWindow.xaml (comma-separated text box)
+- [X] T093 [US3] Update MainViewModel to pass AuthorFilters from UI input to ExportRequest
+- [X] T094 [US3] Add --authors optional argument to CLI argument parser in CliArgumentParser
+- [X] T095 [US3] Implement warning message when author filter results in zero comments (display in GUI log, CLI stdout)
 
 ### Integration Tests for User Story 3
 
-- [ ] T096 [P] [US3] Update stub API to return comments from multiple authors (alice, bob, charlie) via Minimal API /threads endpoint
-- [ ] T097 [P] [US3] Create integration test for GUI author filter at AdoReviewExport/tests/Integration/GuiModeTests.cs verifying only filtered authors in output
-- [ ] T098 [P] [US3] Create integration test for CLI author filter at AdoReviewExport/tests/Integration/CliModeTests.cs verifying only alice and bob comments exported
-- [ ] T099 [P] [US3] Create integration test for non-existent author filter at AdoReviewExport/tests/Integration/DataOutputTests.cs verifying warning message and zero comments
+- [X] T096 [P] [US3] Update stub API to return comments from multiple authors (alice, bob, charlie) via Minimal API /threads endpoint
+- [X] T097 [P] [US3] Create integration test for GUI author filter at AdoReviewExport/tests/Integration/GuiModeTests.cs verifying only filtered authors in output
+- [X] T098 [P] [US3] Create integration test for CLI author filter at AdoReviewExport/tests/Integration/CliModeTests.cs verifying only alice and bob comments exported
+- [X] T099 [P] [US3] Create integration test for non-existent author filter at AdoReviewExport/tests/Integration/DataOutputTests.cs verifying warning message and zero comments
 
 **Checkpoint**: All user stories should now be independently functional. Full feature set is complete.
 
