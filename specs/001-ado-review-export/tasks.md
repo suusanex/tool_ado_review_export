@@ -28,18 +28,18 @@ description: "Task list for Azure DevOps PR Review Comment Exporter implementati
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Create solution file at AdoReviewExport/AdoReviewExport.sln
-- [ ] T002 Initialize AdoReviewExport.UI project (WinUI 3, .NET 10, Unpackaged) at AdoReviewExport/AdoReviewExport.UI/AdoReviewExport.UI.csproj
-- [ ] T003 [P] Initialize AdoReviewExport.Application class library (.NET 10) at AdoReviewExport/AdoReviewExport.Application/AdoReviewExport.Application.csproj
-- [ ] T004 [P] Initialize AdoReviewExport.Infrastructure class library (.NET 10) at AdoReviewExport/AdoReviewExport.Infrastructure/AdoReviewExport.Infrastructure.csproj
-- [ ] T005 Configure project references (UI → Application → Infrastructure)
-- [ ] T006 [P] Add NuGet packages to UI project: Microsoft.WindowsAppSDK 1.7+, Microsoft.Extensions.DependencyInjection, Microsoft.Extensions.Logging
-- [ ] T007 [P] Add NuGet packages to Infrastructure project: Polly 8.x, System.Net.Http, System.Text.Json, NLog 5.x
-- [ ] T008 Configure Unpackaged WinUI 3 settings in AdoReviewExport.UI/AdoReviewExport.UI.csproj (EnableMsixTooling=false, WindowsAppSDKSelfContained=true)
-- [ ] T009 [P] Create xUnit test project at AdoReviewExport/tests/Unit/Unit.csproj
-- [ ] T010 [P] Create xUnit integration test project at AdoReviewExport/tests/Integration/Integration.csproj
-- [ ] T011 [P] Add Moq package to Unit test project
-- [ ] T012 Create stub API project at AdoReviewExport/tests/StubApi/Program.cs using ASP.NET Core Minimal API with /pullrequests and /threads endpoints
+- [X] T001 Create solution file at AdoReviewExport/AdoReviewExport.sln
+- [X] T002 Initialize AdoReviewExport.UI project (WinUI 3, .NET 10, Unpackaged) at AdoReviewExport/AdoReviewExport.UI/AdoReviewExport.UI.csproj
+- [X] T003 [P] Initialize AdoReviewExport.Application class library (.NET 10) at AdoReviewExport/AdoReviewExport.Application/AdoReviewExport.Application.csproj
+- [X] T004 [P] Initialize AdoReviewExport.Infrastructure class library (.NET 10) at AdoReviewExport/AdoReviewExport.Infrastructure/AdoReviewExport.Infrastructure.csproj
+- [X] T005 Configure project references (UI → Application → Infrastructure)
+- [X] T006 [P] Add NuGet packages to UI project: Microsoft.WindowsAppSDK 1.7+, Microsoft.Extensions.DependencyInjection, Microsoft.Extensions.Logging
+- [X] T007 [P] Add NuGet packages to Infrastructure project: Polly 8.x, System.Net.Http, System.Text.Json, NLog 5.x
+- [X] T008 Configure Unpackaged WinUI 3 settings in AdoReviewExport.UI/AdoReviewExport.UI.csproj (EnableMsixTooling=false, WindowsAppSDKSelfContained=false; dotnet build向けにAppxMSBuildToolsPathも設定)
+- [X] T009 [P] Create xUnit test project at AdoReviewExport/tests/Unit/Unit.csproj
+- [X] T010 [P] Create xUnit integration test project at AdoReviewExport/tests/Integration/Integration.csproj
+- [X] T011 [P] Add Moq package to Unit test project
+- [X] T012 Create stub API project at AdoReviewExport/tests/StubApi/Program.cs using ASP.NET Core Minimal API with /pullrequests and /threads endpoints
 
 ---
 
@@ -49,35 +49,35 @@ description: "Task list for Azure DevOps PR Review Comment Exporter implementati
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T013 Create domain exception hierarchy base class at AdoReviewExport/AdoReviewExport.Application/Exceptions/AdoExportException.cs
-- [ ] T014 [P] Create InputValidationException at AdoReviewExport/AdoReviewExport.Application/Exceptions/InputValidationException.cs
-- [ ] T015 [P] Create AuthenticationException at AdoReviewExport/AdoReviewExport.Application/Exceptions/AuthenticationException.cs
-- [ ] T016 [P] Create ApiException at AdoReviewExport/AdoReviewExport.Application/Exceptions/ApiException.cs
-- [ ] T017 [P] Create OutputException at AdoReviewExport/AdoReviewExport.Application/Exceptions/OutputException.cs
-- [ ] T018 Create ExportRequest model at AdoReviewExport/AdoReviewExport.Application/Models/ExportRequest.cs
-- [ ] T019 [P] Create ExportProgress model at AdoReviewExport/AdoReviewExport.Application/Models/ExportProgress.cs
-- [ ] T020 [P] Create ExportResult model at AdoReviewExport/AdoReviewExport.Application/Models/ExportResult.cs
-- [ ] T021 Create DTO classes: IdentityDto at AdoReviewExport/AdoReviewExport.Infrastructure/AzureDevOps/Dtos/IdentityDto.cs
-- [ ] T022 [P] Create FilePositionDto at AdoReviewExport/AdoReviewExport.Infrastructure/AzureDevOps/Dtos/FilePositionDto.cs
-- [ ] T023 [P] Create ThreadContextDto at AdoReviewExport/AdoReviewExport.Infrastructure/AzureDevOps/Dtos/ThreadContextDto.cs
-- [ ] T024 [P] Create CommentDto at AdoReviewExport/AdoReviewExport.Infrastructure/AzureDevOps/Dtos/CommentDto.cs
-- [ ] T025 [P] Create ThreadDto at AdoReviewExport/AdoReviewExport.Infrastructure/AzureDevOps/Dtos/ThreadDto.cs
-- [ ] T026 [P] Create PullRequestDto at AdoReviewExport/AdoReviewExport.Infrastructure/AzureDevOps/Dtos/PullRequestDto.cs
-- [ ] T027 Create IAdoApiClient interface at AdoReviewExport/AdoReviewExport.Infrastructure/AzureDevOps/IAdoApiClient.cs with GetPullRequestsAsync and GetThreadsAsync methods
-- [ ] T028 Implement AdoApiClient at AdoReviewExport/AdoReviewExport.Infrastructure/AzureDevOps/AdoApiClient.cs with HTTP Basic Auth for PAT
-- [ ] T029 Implement paging support using Azure DevOps API continuation token in AdoApiClient for PR retrieval
-- [ ] T030 Create RetryPolicyFactory at AdoReviewExport/AdoReviewExport.Infrastructure/Http/RetryPolicyFactory.cs using Polly (exponential backoff, max 3 retries)
-- [ ] T031 Add HTTP 429 rate limit handling with Retry-After header respect in AdoApiClient
-- [ ] T032_Scope Create PrimaryAuthenticationScope validation: On first API connection, call _apis/profile/profiles/me to verify PAT has 'vso.code' Read scope; throw AuthenticationException with required scope message if missing (FR-004)
-- [ ] T032_Masking Add PAT masking in NLog output (replace PAT with ***REDACTED*** in file/console output)
-- [ ] T033 Create IJsonExporter interface at AdoReviewExport/AdoReviewExport.Infrastructure/Json/IJsonExporter.cs
-- [ ] T034_Base Implement JsonExporter with Utf8JsonWriter for streaming output at AdoReviewExport/AdoReviewExport.Infrastructure/Json/JsonExporter.cs
-- [ ] T034_Meta Implement JsonExporter to include root.meta section with exportedAt (ISO 8601), repository (org/project/repo), counts (totalPRs, totalComments, totalThreads), appVersion, filters (FR-014)
-- [ ] T034_Compat Add root.schemaVersion = "1.0" to JSON output; document that new fields will be added-only, never modifying existing structure (FR-015)
-- [ ] T035 Create IExportService interface at AdoReviewExport/AdoReviewExport.Application/Services/IExportService.cs with ExportAsync method
-- [ ] T036 Implement ExportService at AdoReviewExport/AdoReviewExport.Application/Services/ExportService.cs orchestrating PR/Thread/Comment retrieval
-- [ ] T037 Configure dependency injection container in AdoReviewExport/AdoReviewExport.UI/App.xaml.cs for all services and interfaces
-- [ ] T038_NLog Setup NLog with file logging to %TEMP%\AdoReviewExport\logs\ with daily rotation and JSON format output
+- [X] T013 Create domain exception hierarchy base class at AdoReviewExport/AdoReviewExport.Application/Exceptions/AdoExportException.cs
+- [X] T014 [P] Create InputValidationException at AdoReviewExport/AdoReviewExport.Application/Exceptions/InputValidationException.cs
+- [X] T015 [P] Create AuthenticationException at AdoReviewExport/AdoReviewExport.Application/Exceptions/AuthenticationException.cs
+- [X] T016 [P] Create ApiException at AdoReviewExport/AdoReviewExport.Application/Exceptions/ApiException.cs
+- [X] T017 [P] Create OutputException at AdoReviewExport/AdoReviewExport.Application/Exceptions/OutputException.cs
+- [X] T018 Create ExportRequest model at AdoReviewExport/AdoReviewExport.Application/Models/ExportRequest.cs
+- [X] T019 [P] Create ExportProgress model at AdoReviewExport/AdoReviewExport.Application/Models/ExportProgress.cs
+- [X] T020 [P] Create ExportResult model at AdoReviewExport/AdoReviewExport.Application/Models/ExportResult.cs
+- [X] T021 Create DTO classes: IdentityDto at AdoReviewExport/AdoReviewExport.Infrastructure/AzureDevOps/Dtos/IdentityDto.cs
+- [X] T022 [P] Create FilePositionDto at AdoReviewExport/AdoReviewExport.Infrastructure/AzureDevOps/Dtos/FilePositionDto.cs
+- [X] T023 [P] Create ThreadContextDto at AdoReviewExport/AdoReviewExport.Infrastructure/AzureDevOps/Dtos/ThreadContextDto.cs
+- [X] T024 [P] Create CommentDto at AdoReviewExport/AdoReviewExport.Infrastructure/AzureDevOps/Dtos/CommentDto.cs
+- [X] T025 [P] Create ThreadDto at AdoReviewExport/AdoReviewExport.Infrastructure/AzureDevOps/Dtos/ThreadDto.cs
+- [X] T026 [P] Create PullRequestDto at AdoReviewExport/AdoReviewExport.Infrastructure/AzureDevOps/Dtos/PullRequestDto.cs
+- [X] T027 Create IAdoApiClient interface at AdoReviewExport/AdoReviewExport.Infrastructure/AzureDevOps/IAdoApiClient.cs with GetPullRequestsAsync and GetThreadsAsync methods
+- [X] T028 Implement AdoApiClient at AdoReviewExport/AdoReviewExport.Infrastructure/AzureDevOps/AdoApiClient.cs with HTTP Basic Auth for PAT
+- [X] T029 Implement paging support using Azure DevOps API continuation token in AdoApiClient for PR retrieval
+- [X] T030 Create RetryPolicyFactory at AdoReviewExport/AdoReviewExport.Infrastructure/Http/RetryPolicyFactory.cs using Polly (exponential backoff, max 3 retries)
+- [X] T031 Add HTTP 429 rate limit handling with Retry-After header respect in AdoApiClient
+- [X] T032_Scope Create PrimaryAuthenticationScope validation: On first API connection, call _apis/profile/profiles/me to verify PAT has 'vso.code' Read scope; throw AuthenticationException with required scope message if missing (FR-004)
+- [X] T032_Masking Add PAT masking in NLog output (replace PAT with ***REDACTED*** in file/console output)
+- [X] T033 Create IJsonExporter interface at AdoReviewExport/AdoReviewExport.Infrastructure/Json/IJsonExporter.cs
+- [X] T034_Base Implement JsonExporter with Utf8JsonWriter for streaming output at AdoReviewExport/AdoReviewExport.Infrastructure/Json/JsonExporter.cs
+- [X] T034_Meta Implement JsonExporter to include root.meta section with exportedAt (ISO 8601), repository (org/project/repo), counts (totalPRs, totalComments, totalThreads), appVersion, filters (FR-014)
+- [X] T034_Compat Add root.schemaVersion = "1.0" to JSON output; document that new fields will be added-only, never modifying existing structure (FR-015)
+- [X] T035 Create IExportService interface at AdoReviewExport/AdoReviewExport.Application/Services/IExportService.cs with ExportAsync method
+- [X] T036 Implement ExportService at AdoReviewExport/AdoReviewExport.Application/Services/ExportService.cs orchestrating PR/Thread/Comment retrieval
+- [X] T037 Configure dependency injection container in AdoReviewExport/AdoReviewExport.UI/App.xaml.cs for all services and interfaces
+- [X] T038_NLog Setup NLog with file logging to %TEMP%\AdoReviewExport\logs\ with daily rotation and JSON format output
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 

@@ -10,7 +10,18 @@
 
 # Execution policy (Stop-less mode)
 
-- Continue working until the user’s requested task is complete unless a truly blocking issue occurs.
-- Do not pause after each checklist/TODO item. If checks pass, proceed to implementation without asking.
-- Collect questions/risks/assumptions as notes and report them together at the end.
-- If you must stop, state the single blocking reason and what information/action is needed to continue.
+- Definition of Done (DoD):
+  - Implementation is NOT done when checks pass.
+  - Done means: at least one concrete implementation step is completed
+    (edit/add files or apply a patch), and you attempted build/tests if available.
+
+- Status-only responses are forbidden:
+  - A response that ends after saying "checks passed" is invalid.
+  - If checks pass, immediately start the first implementation task in the SAME run.
+
+- No "permission pauses":
+  - Do not ask "Shall I proceed?" / "Ready to implement?".
+  - If minor ambiguity exists, proceed with safe defaults and log assumptions.
+
+- If you must stop:
+  - State exactly ONE blocking reason and the minimal info/action needed.
