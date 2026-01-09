@@ -33,7 +33,7 @@ public sealed class GuiModeTests
 
         if (!p.WaitForExit(120_000))
         {
-            try { p.Kill(entireProcessTree: true); } catch { }
+            try { p.Kill(entireProcessTree: true); } catch (Exception ex) { Trace.TraceError(ex.ToString()); }
             throw new TimeoutException("GUI did not exit in time.");
         }
 
@@ -177,11 +177,9 @@ public sealed class GuiModeTests
 
     private static int GetFreePort()
     {
-        var listener = new TcpListener(System.Net.IPAddress.Loopback, 0);
+        using var listener = new TcpListener(System.Net.IPAddress.Loopback, 0);
         listener.Start();
-        var port = ((System.Net.IPEndPoint)listener.LocalEndpoint).Port;
-        listener.Stop();
-        return port;
+        return ((System.Net.IPEndPoint)listener.LocalEndpoint).Port;
     }
 
     private sealed class StartedProcess : IDisposable
@@ -202,9 +200,9 @@ public sealed class GuiModeTests
                     Process.Kill(entireProcessTree: true);
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                // ignore
+                System.Diagnostics.Trace.TraceError(ex.ToString());
             }
             finally
             {
@@ -226,6 +224,7 @@ public sealed class GuiModeTests
             RedirectStandardError = true,
             UseShellExecute = false,
         };
+
         psi.Environment["ASPNETCORE_URLS"] = $"http://127.0.0.1:{port}";
         psi.Environment["STUB_MODE"] = mode;
 
@@ -257,10 +256,12 @@ public sealed class GuiModeTests
                     return;
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                System.Diagnostics.Trace.TraceError(ex.ToString());
                 await Task.Delay(100);
             }
+
         }
 
         throw new TimeoutException("StubApi did not start in time.");
@@ -297,7 +298,7 @@ public sealed class GuiModeTests
 
         if (!p.WaitForExit(timeoutMs))
         {
-            try { p.Kill(entireProcessTree: true); } catch { }
+            try { p.Kill(entireProcessTree: true); } catch (Exception ex) { System.Diagnostics.Trace.TraceError(ex.ToString()); }
             throw new TimeoutException("GUI did not exit in time.");
         }
 

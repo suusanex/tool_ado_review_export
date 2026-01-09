@@ -12,7 +12,7 @@ description: "Task list for Azure DevOps PR Review Comment Exporter implementati
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
-**Tests**: 統合テストを省略してはいけません。統合テスト (integration-test.md) は、与えられた敬虔な統合テスト計画を接後で粛行し、実 OS 環境を修正せずの範囲で操作検証を実施する。（仕様要求としてを指定しないが、統一機査程度の品質施として実施する）
+**Tests**: 統合テストを省略してはいけません。統合テスト (integration-test.md) は、与えられた厳格な統合テスト計画に従って実行し、実 OS 環境を変更しない範囲で操作検証を実施する。（仕様要求として明示しないが、統合試験レベルの品質確保施策として実施する）
 
 ---
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AdoReviewExport.UI.Helpers;
 
@@ -82,21 +83,15 @@ public static class CliArgumentParser
 
     private static List<string> ParseAuthors(string? authors)
     {
-        var list = new List<string>();
         if (string.IsNullOrWhiteSpace(authors))
         {
-            return list;
+            return new List<string>();
         }
 
-        var parts = authors.Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries);
-        foreach (var p in parts)
-        {
-            if (!string.IsNullOrWhiteSpace(p))
-            {
-                list.Add(p);
-            }
-        }
-        return list;
+        return authors
+            .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Where(static p => !string.IsNullOrWhiteSpace(p))
+            .ToList();
     }
 
     public static string GetUsage()

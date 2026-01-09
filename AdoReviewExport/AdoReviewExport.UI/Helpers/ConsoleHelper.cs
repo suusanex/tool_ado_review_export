@@ -1,5 +1,6 @@
 using System;
 using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 namespace AdoReviewExport.UI.Helpers;
 
@@ -25,7 +26,17 @@ public static class ConsoleHelper
         }
 
         // それでも無理なら新規に作る。
-        _ = AllocConsole();
+        if (AllocConsole())
+        {
+            return;
+        }
+
+        // どちらも失敗した場合は失敗として扱う。
+        // NOTE: WinExe で CLI を実行する要件のために最小限の P/Invoke を使用している。
+        var lastError = Marshal.GetLastWin32Error();
+        var ex = new InvalidOperationException($"Failed to attach or allocate console. Win32Error={lastError}.");
+        Trace.TraceError(ex.ToString());
+        throw ex;
     }
 
     public static void WriteErrorLine(string message)

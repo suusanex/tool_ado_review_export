@@ -7,6 +7,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using AdoReviewExport.Infrastructure.AzureDevOps.Dtos;
@@ -311,25 +312,26 @@ public sealed class AdoApiClient : IAdoApiClient
         {
             return await response.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
         }
-        catch
+        catch (Exception ex)
         {
+            Trace.TraceError(ex.ToString());
             return string.Empty;
         }
     }
 
     private static async Task DrainAndDisposeAsync(HttpResponseMessage response, CancellationToken cancellationToken)
     {
-        try
+        using (response)
         {
-            _ = await response.Content.ReadAsByteArrayAsync(cancellationToken).ConfigureAwait(false);
-        }
-        catch
-        {
-            // Intentionally ignore draining errors.
-        }
-        finally
-        {
-            response.Dispose();
+            try
+            {
+                _ = await response.Content.ReadAsByteArrayAsync(cancellationToken).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                // Intentionally ignore draining errors, but trace for diagnostics.
+                Trace.TraceError(ex.ToString());
+            }
         }
     }
 

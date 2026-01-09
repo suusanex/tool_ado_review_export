@@ -189,11 +189,9 @@ public sealed class CliModeTests
 
     private static int GetFreePort()
     {
-        var listener = new TcpListener(System.Net.IPAddress.Loopback, 0);
+        using var listener = new TcpListener(System.Net.IPAddress.Loopback, 0);
         listener.Start();
-        var port = ((System.Net.IPEndPoint)listener.LocalEndpoint).Port;
-        listener.Stop();
-        return port;
+        return ((System.Net.IPEndPoint)listener.LocalEndpoint).Port;
     }
 
     private sealed class StartedProcess : IDisposable
@@ -214,9 +212,9 @@ public sealed class CliModeTests
                     Process.Kill(entireProcessTree: true);
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                // ignore
+                System.Diagnostics.Trace.TraceError(ex.ToString());
             }
             finally
             {
@@ -238,6 +236,7 @@ public sealed class CliModeTests
             RedirectStandardError = true,
             UseShellExecute = false,
         };
+
         psi.Environment["ASPNETCORE_URLS"] = $"http://127.0.0.1:{port}";
         psi.Environment["STUB_MODE"] = mode;
 
@@ -269,10 +268,12 @@ public sealed class CliModeTests
                     return;
                 }
             }
-            catch
+            catch (Exception ex)
             {
+                System.Diagnostics.Trace.TraceError(ex.ToString());
                 await Task.Delay(100);
             }
+
         }
 
         throw new TimeoutException("StubApi did not start in time.");
@@ -313,7 +314,7 @@ public sealed class CliModeTests
 
         if (!p.WaitForExit(timeoutMs))
         {
-            try { p.Kill(entireProcessTree: true); } catch { }
+            try { p.Kill(entireProcessTree: true); } catch (Exception ex) { System.Diagnostics.Trace.TraceError(ex.ToString()); }
             throw new TimeoutException("CLI did not exit in time.");
         }
 

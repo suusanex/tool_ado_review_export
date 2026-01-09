@@ -29,10 +29,9 @@ public static class DotnetBuildOnce
 
         if (!p.WaitForExit(timeoutMs))
         {
-            try { p.Kill(entireProcessTree: true); } catch { }
+            try { p.Kill(entireProcessTree: true); } catch (Exception ex) { Trace.TraceError(ex.ToString()); }
             throw new TimeoutException($"dotnet build timed out for {projectPath}");
         }
-
         var stdout = p.StandardOutput.ReadToEnd();
         var stderr = p.StandardError.ReadToEnd();
 

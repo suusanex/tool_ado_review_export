@@ -2,6 +2,7 @@ using System;
 using System.IO;
 using System.Text.Encodings.Web;
 using System.Text.Json;
+using System.Diagnostics;
 using System.Threading;
 using System.Threading.Tasks;
 using AdoReviewExport.Infrastructure.AzureDevOps.Dtos;
@@ -20,6 +21,8 @@ public sealed class JsonExporter : IJsonExporter
         JsonExportMeta meta,
         CancellationToken cancellationToken = default)
     {
+        FileStream? stream = null;
+        Utf8JsonWriter? writer = null;
         try
         {
             var directory = Path.GetDirectoryName(outputFilePath);
@@ -28,8 +31,8 @@ public sealed class JsonExporter : IJsonExporter
                 Directory.CreateDirectory(directory);
             }
 
-            var stream = new FileStream(outputFilePath, FileMode.Create, FileAccess.Write, FileShare.Read);
-            var writer = new Utf8JsonWriter(stream, new JsonWriterOptions
+            stream = new FileStream(outputFilePath, FileMode.Create, FileAccess.Write, FileShare.Read);
+            writer = new Utf8JsonWriter(stream, new JsonWriterOptions
             {
                 Indented = true,
                 Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
@@ -46,8 +49,16 @@ public sealed class JsonExporter : IJsonExporter
 
             return new Session(stream, writer, meta);
         }
+        catch (OperationCanceledException)
+        {
+            try { writer?.Dispose(); } catch (Exception ex) { Trace.TraceError(ex.ToString()); }
+            try { if (stream is not null) await stream.DisposeAsync().ConfigureAwait(false); } catch (Exception ex) { Trace.TraceError(ex.ToString()); }
+            throw;
+        }
         catch (Exception ex)
         {
+            try { writer?.Dispose(); } catch (Exception disposeEx) { Trace.TraceError(disposeEx.ToString()); }
+            try { if (stream is not null) await stream.DisposeAsync().ConfigureAwait(false); } catch (Exception disposeEx) { Trace.TraceError(disposeEx.ToString()); }
             throw new IOException($"Failed to open output file: {outputFilePath}", ex);
         }
     }
@@ -181,6 +192,7 @@ public sealed class JsonExporter : IJsonExporter
             catch (Exception ex)
             {
                 Logger.Error(ex, ex.ToString());
+                Trace.TraceError(ex.ToString());
             }
         }
     }

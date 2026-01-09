@@ -114,34 +114,60 @@ public static class Program
         }
         catch (OperationCanceledException)
         {
+            TryDeletePartialFile(parsed.OutputFilePath);
             ConsoleHelper.WriteErrorLine("Canceled.");
             return 130;
         }
         catch (InputValidationException ex)
         {
+            TryDeletePartialFile(parsed.OutputFilePath);
             ConsoleHelper.WriteErrorLine(ex.Message);
             return 1;
         }
         catch (AuthenticationException ex)
         {
+            TryDeletePartialFile(parsed.OutputFilePath);
             ConsoleHelper.WriteErrorLine(ex.Message);
             return 2;
         }
         catch (ApiException ex)
         {
+            TryDeletePartialFile(parsed.OutputFilePath);
             ConsoleHelper.WriteErrorLine(ex.Message);
             return 3;
         }
         catch (OutputException ex)
         {
+            TryDeletePartialFile(parsed.OutputFilePath);
             ConsoleHelper.WriteErrorLine(ex.Message);
             return 4;
         }
         catch (Exception ex)
         {
+            TryDeletePartialFile(parsed.OutputFilePath);
             ConsoleHelper.WriteErrorLine("Unexpected error.");
             System.Diagnostics.Trace.TraceError(ex.ToString());
             return 1;
+        }
+    }
+
+    private static void TryDeletePartialFile(string? outputFilePath)
+    {
+        if (string.IsNullOrWhiteSpace(outputFilePath))
+        {
+            return;
+        }
+
+        try
+        {
+            if (File.Exists(outputFilePath))
+            {
+                File.Delete(outputFilePath);
+            }
+        }
+        catch (Exception ex)
+        {
+            System.Diagnostics.Trace.TraceError(ex.ToString());
         }
     }
 

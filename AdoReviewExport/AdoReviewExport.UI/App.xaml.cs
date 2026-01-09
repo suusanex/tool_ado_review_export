@@ -15,7 +15,7 @@ namespace AdoReviewExport.UI;
 public sealed partial class App : Microsoft.UI.Xaml.Application
 {
     private Window? _window;
-    private IServiceProvider? _services;
+    private readonly IServiceProvider _services;
 
     public App()
     {
@@ -26,11 +26,6 @@ public sealed partial class App : Microsoft.UI.Xaml.Application
 
     protected override void OnLaunched(LaunchActivatedEventArgs args)
     {
-        if (_services is null)
-        {
-            throw new InvalidOperationException("ServiceProvider is not initialized.");
-        }
-
         var mainWindow = new Views.MainWindow();
         var vm = _services.GetRequiredService<MainViewModel>();
 
